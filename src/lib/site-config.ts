@@ -1,3 +1,5 @@
+export type NavStyle = "topbar" | "bottombar" | "sidebar";
+
 export const siteConfig = {
   name: "Puhu Media",
   domain: "puhumedia.com.tr",

@@ -199,6 +199,17 @@ model ContactSubmission {
   @@map("contact_submissions")
 }
 
+model InstagramPost {
+  id        String   @id @default(cuid())
+  url       String   @unique
+  caption   String?
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("instagram_posts")
+}
+
 model Popup {
   id        String    @id @default(cuid())
   title     String

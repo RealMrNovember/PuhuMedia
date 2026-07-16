@@ -5,6 +5,7 @@ import { WhyUs } from "@/components/marketing/sections/why-us";
 import { Process } from "@/components/marketing/sections/process";
 import { CaseStudiesTeaser } from "@/components/marketing/sections/case-studies-teaser";
 import { Testimonials } from "@/components/marketing/sections/testimonials";
+import { InstagramShowcase } from "@/components/marketing/sections/instagram-showcase";
 import { BlogTeaser } from "@/components/marketing/sections/blog-teaser";
 import { FaqTeaser } from "@/components/marketing/sections/faq-teaser";
 import { CtaBanner } from "@/components/marketing/sections/cta-banner";
@@ -21,6 +22,7 @@ export default function HomePage() {
       <Process />
       <CaseStudiesTeaser />
       <Testimonials />
+      <InstagramShowcase />
       <BlogTeaser />
       <FaqTeaser />
       <CtaBanner />

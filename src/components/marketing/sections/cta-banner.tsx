@@ -2,9 +2,11 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/marketing/reveal";
-import { siteConfig } from "@/lib/site-config";
+import { getContactInfo } from "@/server/repositories/site-setting.repository";
 
-export function CtaBanner() {
+export async function CtaBanner() {
+  const { phone, phoneRaw } = await getContactInfo();
+
   return (
     <section className="section-padding">
       <div className="container-brand">
@@ -33,10 +35,10 @@ export function CtaBanner() {
                   </Link>
                 </Button>
                 <a
-                  href={`tel:${siteConfig.contact.phoneRaw}`}
+                  href={`tel:${phoneRaw}`}
                   className="text-sm font-medium text-background/80 underline-offset-4 hover:underline"
                 >
-                  {siteConfig.contact.phone}
+                  {phone}
                 </a>
               </div>
             </div>

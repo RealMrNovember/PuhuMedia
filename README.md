@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# Puhu Media
 
-First, run the development server:
+**Sağlık reklamcılığında uzman, premium yaratıcı ajans platformu**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+[puhumedia.com.tr](https://puhumedia.com.tr)
+
+</div>
+
+---
+
+## Hakkında
+
+Puhu Media'nın kurumsal web platformu; sağlık reklamcılığı ve sağlık turizmi pazarlamasındaki uzmanlığın yanı sıra kurumsal kimlik, dijital pazarlama, sosyal medya yönetimi ve prodüksiyon (video, ürün fotoğrafçılığı, özel gün çekimleri) hizmetlerini kapsayan, tamamen özel geliştirilmiş bir kurumsal site ve içerik yönetim sistemidir.
+
+Site; pazarlama sayfaları, blog, referans/vaka analizi sistemi, teklif/lead formları ve kod değiştirmeden içerik yönetimine izin veren bir admin panelinden oluşur.
+
+## Teknoloji Yığını
+
+| Katman | Teknoloji |
+| --- | --- |
+| Framework | [Next.js 16](https://nextjs.org) (App Router, Turbopack, React 19) |
+| Dil | TypeScript (strict mode) |
+| Stil | Tailwind CSS v4, [shadcn/ui](https://ui.shadcn.com) |
+| Animasyon | [Motion](https://motion.dev) (Framer Motion) |
+| Veritabanı | PostgreSQL |
+| ORM | [Prisma 7](https://www.prisma.io) (driver adapters, `prisma-client` generator) |
+| Kimlik Doğrulama | [Auth.js v5](https://authjs.dev) (Credentials + JWT, rol tabanlı yetkilendirme) |
+| Doğrulama | Zod |
+| E-posta | Nodemailer (SMTP) |
+| Görsel İşleme | sharp |
+
+## Mimari
+
+Proje, sorumlulukları katmanlara ayıran hafif bir Clean Architecture yaklaşımı izler:
+
+```
+src/
+  app/
+    (marketing)/     → herkese açık pazarlama sitesi (route group)
+    admin/            → yönetim paneli (giriş korumalı)
+    api/               → route handler'lar (Auth.js vb.)
+  components/
+    ui/                → shadcn/ui bileşenleri
+    marketing/         → pazarlama sitesine özel bileşenler
+    admin/             → admin paneline özel bileşenler
+  lib/                 → db, auth, email, site-config, güvenlik yardımcıları
+  server/
+    repositories/      → Prisma veri erişim katmanı
+    services/          → iş kuralları
+    actions/           → server action'lar (form/CRUD giriş noktaları)
+  proxy.ts             → admin rotalarını koruyan Next.js Proxy (eski adıyla Middleware)
+prisma/
+  schema.prisma        → veri modeli
+  seed.ts               → başlangıç admin kullanıcısı ve varsayılan içerik
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Geliştirme Ortamını Kurma
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Gereksinimler
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js 20.9+
+- PostgreSQL (local geliştirme için Docker önerilir)
 
-## Learn More
+### Adımlar
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# 1. Bağımlılıkları kur
+npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 2. Ortam değişkenlerini ayarla
+cp .env.example .env
+# .env içindeki DATABASE_URL, AUTH_SECRET, SMTP_* değerlerini doldurun
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# 3. Local PostgreSQL'i başlat (Docker)
+docker run -d --name puhumedia-postgres \
+  -e POSTGRES_USER=puhumedia \
+  -e POSTGRES_PASSWORD=puhumedia_dev_local \
+  -e POSTGRES_DB=puhumedia \
+  -p 5432:5432 postgres:17-alpine
 
-## Deploy on Vercel
+# 4. Veritabanı şemasını uygula ve başlangıç verisini yükle
+npx prisma migrate dev
+npx prisma db seed
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 5. Geliştirme sunucusunu başlat
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Site [http://localhost:3000](http://localhost:3000) adresinde, admin paneli [http://localhost:3000/admin](http://localhost:3000/admin) adresinde çalışır.
+
+### Faydalı Komutlar
+
+```bash
+npm run dev          # geliştirme sunucusu (Turbopack)
+npm run build         # production build
+npm run start          # production sunucusu
+npm run lint            # ESLint
+npx tsc --noEmit         # tip kontrolü
+npx prisma studio         # veritabanını görsel arayüzden incele
+npx prisma migrate dev     # yeni migration oluştur/uygula
+```
+
+## Dağıtım (Deployment)
+
+Uygulama local ortamda build alınıp, standalone Next.js çıktısı üzerinden üretim sunucusuna dağıtılacak şekilde tasarlanmıştır (PM2 + Nginx reverse proxy + PostgreSQL). Dağıtım betikleri `scripts/` dizininde yer alır.
+
+## Lisans
+
+Bu proje Puhu Media için özel olarak geliştirilmiştir. Tüm hakları saklıdır.
+
+---
+
+<div align="center">
+<sub>Tasarım & geliştirme: <a href="https://cicibyte.com">Cicibyte Corp</a></sub>
+</div>

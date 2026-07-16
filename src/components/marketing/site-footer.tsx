@@ -15,16 +15,19 @@ import {
   services,
   siteConfig,
 } from "@/lib/site-config";
+import { getContactInfo } from "@/server/repositories/site-setting.repository";
+import { cn } from "@/lib/utils";
 
-export function SiteFooter() {
+export async function SiteFooter({ className }: { className?: string }) {
   const year = new Date().getFullYear();
+  const contact = await getContactInfo();
   const footerServices = serviceCategories.flatMap(
     (category) =>
       services.filter((service) => service.category === category.key).slice(0, 2)
   );
 
   return (
-    <footer className="border-t border-border bg-secondary/40">
+    <footer className={cn("border-t border-border bg-secondary/40", className)}>
       <div className="container-brand grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-5 lg:py-20">
         <div className="lg:col-span-2">
           <Logo />
@@ -33,7 +36,7 @@ export function SiteFooter() {
           </p>
           <div className="mt-6 flex items-center gap-3">
             <a
-              href={siteConfig.social.instagram}
+              href={contact.social.instagram}
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
@@ -42,7 +45,7 @@ export function SiteFooter() {
               <InstagramIcon className="size-4" />
             </a>
             <a
-              href={siteConfig.social.linkedin}
+              href={contact.social.linkedin}
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
@@ -51,7 +54,7 @@ export function SiteFooter() {
               <LinkedinIcon className="size-4" />
             </a>
             <a
-              href={siteConfig.social.youtube}
+              href={contact.social.youtube}
               target="_blank"
               rel="noreferrer"
               aria-label="YouTube"
@@ -100,16 +103,16 @@ export function SiteFooter() {
             <li className="flex items-start gap-2.5">
               <Phone className="mt-0.5 size-4 shrink-0" />
               <a
-                href={`tel:${siteConfig.contact.phoneRaw}`}
+                href={`tel:${contact.phoneRaw}`}
                 className="transition-colors hover:text-foreground"
               >
-                {siteConfig.contact.phone}
+                {contact.phone}
               </a>
             </li>
             <li className="flex items-start gap-2.5">
               <WhatsappIcon className="mt-0.5 size-4 shrink-0" />
               <a
-                href={`https://wa.me/${siteConfig.contact.whatsapp.replace("+", "")}`}
+                href={`https://wa.me/${contact.whatsapp.replace("+", "")}`}
                 target="_blank"
                 rel="noreferrer"
                 className="transition-colors hover:text-foreground"
@@ -120,15 +123,15 @@ export function SiteFooter() {
             <li className="flex items-start gap-2.5">
               <Mail className="mt-0.5 size-4 shrink-0" />
               <a
-                href={`mailto:${siteConfig.contact.email}`}
+                href={`mailto:${contact.email}`}
                 className="transition-colors hover:text-foreground"
               >
-                {siteConfig.contact.email}
+                {contact.email}
               </a>
             </li>
             <li className="flex items-start gap-2.5">
               <MapPin className="mt-0.5 size-4 shrink-0" />
-              <span>{siteConfig.contact.address}</span>
+              <span>{contact.address}</span>
             </li>
           </ul>
         </div>
@@ -136,11 +139,11 @@ export function SiteFooter() {
 
       <Separator />
 
-      <div className="container-brand flex flex-col items-center justify-between gap-4 py-6 text-xs text-muted-foreground md:flex-row">
+      <div className="container-brand flex flex-col items-center justify-between gap-3 py-6 text-xs text-muted-foreground md:flex-row">
         <p>
           © {year} {siteConfig.name}. Tüm hakları saklıdır.
         </p>
-        <div className="flex items-center gap-5">
+        <div className="flex flex-wrap items-center justify-center gap-5">
           {legalNav.map((item) => (
             <Link
               key={item.href}
@@ -151,6 +154,15 @@ export function SiteFooter() {
             </Link>
           ))}
         </div>
+        <a
+          href="https://cicibyte.com"
+          target="_blank"
+          rel="noreferrer"
+          className="text-muted-foreground/80 transition-colors hover:text-foreground"
+        >
+          Tasarım &amp; Geliştirme:{" "}
+          <span className="font-medium">Cicibyte Corp</span>
+        </a>
       </div>
     </footer>
   );
