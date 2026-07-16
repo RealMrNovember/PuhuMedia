@@ -46,6 +46,53 @@ async function main() {
     });
   }
 
+  const faqs = [
+    {
+      question: "Sadece sağlık sektörüne mi hizmet veriyorsunuz?",
+      answer:
+        "Sağlık reklamcılığı ve sağlık turizmi pazarlaması en güçlü uzmanlık alanımız olsa da; kurumsal marka yönetimi, sosyal medya, dijital reklam, SEO ve web yazılım gibi hizmetleri farklı sektörlerden markalara da sunuyoruz.",
+      order: 1,
+    },
+    {
+      question: "Sağlık reklamcılığında mevzuata uygunluk nasıl sağlanıyor?",
+      answer:
+        "Sağlık Bakanlığı reklam yönetmeliği ve platformların (Google, Meta) sağlık içerikli reklam politikalarına hakim bir ekiple çalışıyoruz; her kampanya öncesinde içerik ve teklif metinlerini uyumluluk açısından gözden geçiriyoruz.",
+      order: 2,
+    },
+    {
+      question: "Bir projeye başlamadan önce süreç nasıl işliyor?",
+      answer:
+        "Keşif görüşmesiyle marka, hedef kitle ve rakip analizini yapıyor; ardından hedeflerinize özel bir strateji ve teklif sunuyoruz. Onay sonrası üretim ve yayın süreci başlıyor.",
+      order: 3,
+    },
+    {
+      question: "Hangi raporlama ve ölçümleme araçlarını kullanıyorsunuz?",
+      answer:
+        "Google Analytics, Google Search Console, Meta Ads Manager ve Google Ads gibi araçlarla düzenli performans raporları sunuyor; kampanya sonuçlarını şeffaf şekilde paylaşıyoruz.",
+      order: 4,
+    },
+    {
+      question: "Sağlık turizmi pazarlamasında hangi dillerde hizmet veriyorsunuz?",
+      answer:
+        "Uluslararası hasta kazanımı hedefleyen markalar için İngilizce, Arapça ve Rusça başta olmak üzere hedef pazara özel çok dilli içerik ve reklam yönetimi sağlıyoruz.",
+      order: 5,
+    },
+    {
+      question: "Minimum çalışma süresi veya sözleşme taahhüdü var mı?",
+      answer:
+        "Hizmet kapsamına göre değişmekle birlikte sürdürülebilir sonuçlar için genellikle aylık anlaşmalar öneriyoruz; proje bazlı çalışmalar için de esnek modeller sunuyoruz.",
+      order: 6,
+    },
+  ];
+
+  for (const faq of faqs) {
+    await prisma.fAQ.upsert({
+      where: { id: `seed-faq-${faq.order}` },
+      update: {},
+      create: { id: `seed-faq-${faq.order}`, ...faq },
+    });
+  }
+
   console.log(`Seed complete. Admin login: ${adminEmail} / ${adminPassword}`);
 }
 
