@@ -1,41 +1,9 @@
 import Link from "next/link";
-import {
-  Stethoscope,
-  Plane,
-  Search,
-  MousePointerClick,
-  Megaphone,
-  MessagesSquare,
-  Bot,
-  Palette,
-  MonitorSmartphone,
-  PenTool,
-  Clapperboard,
-  ShoppingBag,
-  CalendarHeart,
-  Camera,
-  ArrowUpRight,
-} from "lucide-react";
+import { Stethoscope, ArrowUpRight } from "lucide-react";
 import { serviceCategories, services } from "@/lib/site-config";
+import { serviceIcons } from "@/lib/service-icons";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { Reveal } from "@/components/marketing/reveal";
-
-const icons: Record<string, React.ComponentType<{ className?: string }>> = {
-  "saglik-reklamciligi": Stethoscope,
-  "saglik-turizmi-pazarlamasi": Plane,
-  seo: Search,
-  "google-ads": MousePointerClick,
-  "meta-reklamlari": Megaphone,
-  "sosyal-medya-yonetimi": MessagesSquare,
-  "yapay-zeka-destekli-pazarlama": Bot,
-  "kurumsal-kimlik": Palette,
-  "web-tasarim": MonitorSmartphone,
-  "icerik-uretimi": PenTool,
-  "video-produksiyon": Clapperboard,
-  "urun-fotografciligi": ShoppingBag,
-  "ozel-gun-cekimleri": CalendarHeart,
-  "kurumsal-fotograf": Camera,
-};
 
 export function ServicesGrid() {
   return (
@@ -61,7 +29,7 @@ export function ServicesGrid() {
                 {services
                   .filter((service) => service.category === category.key)
                   .map((service, index) => {
-                    const Icon = icons[service.slug] ?? Stethoscope;
+                    const Icon = serviceIcons[service.slug] ?? Stethoscope;
                     return (
                       <Reveal key={service.slug} delay={(index % 3) * 0.08}>
                         <Link

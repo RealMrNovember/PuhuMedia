@@ -23,6 +23,10 @@ async function main() {
     },
   });
 
+  // NOTE: `update` currently overwrites existing values on every reseed
+  // (pre-launch convenience). Switch to `update: {}` (create-only) once the
+  // admin panel holds real production settings, so a reseed can never
+  // clobber live admin edits.
   const defaultSettings: Record<string, unknown> = {
     contact_phone: "+90 542 490 65 28",
     contact_whatsapp: "+905424906528",
@@ -41,7 +45,7 @@ async function main() {
   for (const [key, value] of Object.entries(defaultSettings)) {
     await prisma.siteSetting.upsert({
       where: { key },
-      update: {},
+      update: { value: value as never },
       create: { key, value: value as never },
     });
   }
@@ -97,6 +101,83 @@ async function main() {
       where: { id: `seed-faq-${faq.order}` },
       update: {},
       create: { id: `seed-faq-${faq.order}`, ...faq },
+    });
+  }
+
+  const references = [
+    {
+      slug: "vitalis-klinik",
+      name: "Vitalis Klinik",
+      logo: "/references/vitalis-klinik.svg",
+      sector: "Diş Kliniği",
+      description:
+        "İstanbul merkezli diş kliniği zinciri için marka yönetimi ve dijital pazarlama iş birliği. (Örnek/yer tutucu içerik)",
+      servicesUsed: ["saglik-reklamciligi", "seo", "kurumsal-fotograf"],
+      order: 1,
+      isFeatured: true,
+    },
+    {
+      slug: "nova-saglik-grubu",
+      name: "Nova Sağlık Grubu",
+      logo: "/references/nova-saglik-grubu.svg",
+      sector: "Hastane / Sağlık Turizmi",
+      description:
+        "Uluslararası hasta kazanımına yönelik çok dilli dijital pazarlama iş birliği. (Örnek/yer tutucu içerik)",
+      servicesUsed: ["saglik-turizmi-pazarlamasi", "google-ads"],
+      order: 2,
+      isFeatured: true,
+    },
+    {
+      slug: "lumen-dis-klinigi",
+      name: "Lumen Diş Kliniği",
+      logo: "/references/lumen-dis-klinigi.svg",
+      sector: "Diş Kliniği",
+      description:
+        "Sosyal medya yönetimi ve içerik üretimi ile marka bilinirliği artırma çalışması. (Örnek/yer tutucu içerik)",
+      servicesUsed: ["sosyal-medya-yonetimi", "icerik-uretimi"],
+      order: 3,
+      isFeatured: false,
+    },
+    {
+      slug: "aurora-guzellik-merkezi",
+      name: "Aurora Güzellik Merkezi",
+      logo: "/references/aurora-guzellik-merkezi.svg",
+      sector: "Estetik Merkezi",
+      description:
+        "Kurumsal kimlik yenileme ve web sitesi tasarımı projesi. (Örnek/yer tutucu içerik)",
+      servicesUsed: ["kurumsal-kimlik", "web-tasarim"],
+      order: 4,
+      isFeatured: true,
+    },
+    {
+      slug: "kristal-otel-turizm",
+      name: "Kristal Otel & Turizm",
+      logo: "/references/kristal-otel-turizm.svg",
+      sector: "Turizm",
+      description:
+        "Otel markası için video prodüksiyon ve sosyal medya reklam yönetimi. (Örnek/yer tutucu içerik)",
+      servicesUsed: ["video-produksiyon", "meta-reklamlari"],
+      order: 5,
+      isFeatured: false,
+    },
+    {
+      slug: "mavi-teknoloji",
+      name: "Mavi Teknoloji A.Ş.",
+      logo: "/references/mavi-teknoloji.svg",
+      sector: "Kurumsal / Teknoloji",
+      description:
+        "Kurumsal web sitesi ve SEO stratejisi geliştirme projesi. (Örnek/yer tutucu içerik)",
+      servicesUsed: ["web-tasarim", "seo"],
+      order: 6,
+      isFeatured: false,
+    },
+  ];
+
+  for (const reference of references) {
+    await prisma.reference.upsert({
+      where: { slug: reference.slug },
+      update: {},
+      create: { ...reference, gallery: [], isPublished: true },
     });
   }
 
