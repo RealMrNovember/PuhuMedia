@@ -1,0 +1,284 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  EDITOR
+  AUTHOR
+}
+
+enum ContentStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  WON
+  LOST
+}
+
+model User {
+  id                  String     @id @default(cuid())
+  name                String
+  email               String     @unique
+  passwordHash        String
+  role                Role       @default(EDITOR)
+  isActive            Boolean    @default(true)
+  lastLoginAt         DateTime?
+  failedLoginAttempts Int        @default(0)
+  lockedUntil         DateTime?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  blogPosts           BlogPost[]
+  auditLogs           AuditLog[]
+
+  @@map("users")
+}
+
+model Category {
+  id    String     @id @default(cuid())
+  name  String     @unique
+  slug  String     @unique
+  posts BlogPost[]
+
+  @@map("categories")
+}
+
+model Tag {
+  id    String     @id @default(cuid())
+  name  String     @unique
+  slug  String     @unique
+  posts BlogPost[]
+
+  @@map("tags")
+}
+
+model BlogPost {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  title          String
+  excerpt        String
+  contentHtml    String
+  coverImage     String?
+  readingTimeMin Int?
+  status         ContentStatus @default(DRAFT)
+  publishedAt    DateTime?
+  viewCount      Int           @default(0)
+  seoTitle       String?
+  seoDescription String?
+  ogImage        String?
+  authorId       String
+  author         User          @relation(fields: [authorId], references: [id])
+  categoryId     String?
+  category       Category?     @relation(fields: [categoryId], references: [id])
+  tags           Tag[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([status, publishedAt])
+  @@map("blog_posts")
+}
+
+model Reference {
+  id           String     @id @default(cuid())
+  name         String
+  slug         String     @unique
+  logo         String
+  sector       String
+  description  String
+  gallery      String[]
+  servicesUsed String[]
+  results      String?
+  order        Int        @default(0)
+  isFeatured   Boolean    @default(false)
+  isPublished  Boolean    @default(true)
+  caseStudy    CaseStudy?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@map("references")
+}
+
+model CaseStudy {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  title          String
+  referenceId    String?       @unique
+  reference      Reference?    @relation(fields: [referenceId], references: [id])
+  client         String
+  sector         String
+  coverImage     String
+  problem        String
+  solution       String
+  strategy       String
+  process        String
+  results        Json
+  gallery        String[]
+  ctaText        String?
+  status         ContentStatus @default(DRAFT)
+  seoTitle       String?
+  seoDescription String?
+  ogImage        String?
+  publishedAt    DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([status, publishedAt])
+  @@map("case_studies")
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  company     String
+  photo       String?
+  quote       String
+  rating      Int      @default(5)
+  isPublished Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@map("testimonials")
+}
+
+model FAQ {
+  id          String   @id @default(cuid())
+  question    String
+  answer      String
+  category    String?
+  order       Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@map("faqs")
+}
+
+model LeadSubmission {
+  id        String     @id @default(cuid())
+  company   String?
+  fullName  String
+  phone     String
+  email     String
+  service   String
+  budget    String?
+  message   String?
+  fileUrl   String?
+  status    LeadStatus @default(NEW)
+  source    String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([status, createdAt])
+  @@map("lead_submissions")
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  fullName  String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  ipAddress String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("contact_submissions")
+}
+
+model Popup {
+  id        String    @id @default(cuid())
+  title     String
+  content   String
+  image     String?
+  ctaLabel  String?
+  ctaLink   String?
+  placement String    @default("EXIT_INTENT")
+  isActive  Boolean   @default(false)
+  startDate DateTime?
+  endDate   DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("popups")
+}
+
+model Banner {
+  id        String    @id @default(cuid())
+  title     String
+  image     String
+  link      String?
+  placement String
+  isActive  Boolean   @default(false)
+  startDate DateTime?
+  endDate   DateTime?
+  order     Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("banners")
+}
+
+model MediaAsset {
+  id        String   @id @default(cuid())
+  filename  String
+  path      String
+  mimeType  String
+  size      Int
+  width     Int?
+  height    Int?
+  alt       String?
+  createdAt DateTime @default(now())
+
+  @@map("media_assets")
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model MenuItem {
+  id       String     @id @default(cuid())
+  label    String
+  url      String?
+  location String
+  order    Int        @default(0)
+  isActive Boolean    @default(true)
+  parentId String?
+  parent   MenuItem?  @relation("MenuItemChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children MenuItem[] @relation("MenuItemChildren")
+
+  @@map("menu_items")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  action     String
+  entityType String
+  entityId   String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@map("audit_logs")
+}
