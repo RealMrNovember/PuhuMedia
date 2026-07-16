@@ -4,13 +4,24 @@ import { Logo } from "@/components/marketing/logo";
 import {
   InstagramIcon,
   LinkedinIcon,
+  WhatsappIcon,
   YoutubeIcon,
 } from "@/components/marketing/social-icons";
 import { Separator } from "@/components/ui/separator";
-import { legalNav, mainNav, services, siteConfig } from "@/lib/site-config";
+import {
+  legalNav,
+  mainNav,
+  serviceCategories,
+  services,
+  siteConfig,
+} from "@/lib/site-config";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
+  const footerServices = serviceCategories.flatMap(
+    (category) =>
+      services.filter((service) => service.category === category.key).slice(0, 2)
+  );
 
   return (
     <footer className="border-t border-border bg-secondary/40">
@@ -70,7 +81,7 @@ export function SiteFooter() {
         <div>
           <h3 className="text-sm font-semibold text-foreground">Hizmetler</h3>
           <ul className="mt-4 space-y-3">
-            {services.slice(0, 6).map((service) => (
+            {footerServices.map((service) => (
               <li key={service.slug}>
                 <Link
                   href={`/hizmetler/${service.slug}`}
@@ -89,10 +100,21 @@ export function SiteFooter() {
             <li className="flex items-start gap-2.5">
               <Phone className="mt-0.5 size-4 shrink-0" />
               <a
-                href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}
+                href={`tel:${siteConfig.contact.phoneRaw}`}
                 className="transition-colors hover:text-foreground"
               >
                 {siteConfig.contact.phone}
+              </a>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <WhatsappIcon className="mt-0.5 size-4 shrink-0" />
+              <a
+                href={`https://wa.me/${siteConfig.contact.whatsapp.replace("+", "")}`}
+                target="_blank"
+                rel="noreferrer"
+                className="transition-colors hover:text-foreground"
+              >
+                WhatsApp ile Yazın
               </a>
             </li>
             <li className="flex items-start gap-2.5">

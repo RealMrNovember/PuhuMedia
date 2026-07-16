@@ -35,8 +35,8 @@ export function WhyUs() {
       <div className="container-brand grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <SectionHeading
           eyebrow="Neden Puhu Media"
-          title="Sağlık markaları için doğru dijital ortak"
-          description="Sağlık reklamcılığında hem yaratıcı hem stratejik olmak zorunlu. Biz bu ikisini aynı anda sunuyoruz."
+          title="Sektörünüz ne olursa olsun doğru yaratıcı ortak"
+          description="Sağlık reklamcılığındaki derin uzmanlığımızı, her sektörden markaya sunduğumuz stratejik ve yaratıcı yaklaşımla birleştiriyoruz."
         />
 
         <div className="grid gap-5 sm:grid-cols-2">

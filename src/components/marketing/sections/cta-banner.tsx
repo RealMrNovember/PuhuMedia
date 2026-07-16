@@ -19,8 +19,7 @@ export function CtaBanner() {
                 Markanızı bir sonraki seviyeye taşımaya hazır mısınız?
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-balance text-background/70">
-                Sağlık markanız için özel hazırlanmış bir strateji görüşmesi
-                planlayalım.
+                Markanıza özel hazırlanmış bir strateji görüşmesi planlayalım.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Button
@@ -34,7 +33,7 @@ export function CtaBanner() {
                   </Link>
                 </Button>
                 <a
-                  href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}
+                  href={`tel:${siteConfig.contact.phoneRaw}`}
                   className="text-sm font-medium text-background/80 underline-offset-4 hover:underline"
                 >
                   {siteConfig.contact.phone}

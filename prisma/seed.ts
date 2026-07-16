@@ -24,8 +24,8 @@ async function main() {
   });
 
   const defaultSettings: Record<string, unknown> = {
-    contact_phone: "+90 212 000 00 00",
-    contact_whatsapp: "+90 500 000 00 00",
+    contact_phone: "+90 542 490 65 28",
+    contact_whatsapp: "+905424906528",
     contact_email: "info@puhumedia.com.tr",
     contact_address: "İstanbul, Türkiye",
     working_hours: "Pazartesi - Cuma, 09:00 - 18:00",
@@ -82,6 +82,13 @@ async function main() {
       answer:
         "Hizmet kapsamına göre değişmekle birlikte sürdürülebilir sonuçlar için genellikle aylık anlaşmalar öneriyoruz; proje bazlı çalışmalar için de esnek modeller sunuyoruz.",
       order: 6,
+    },
+    {
+      question:
+        "Sadece kurumsal projeler mi alıyorsunuz, yoksa ürün ve özel gün çekimleri de yapıyor musunuz?",
+      answer:
+        "Kurumsal reklam ve prodüksiyon işlerinin yanı sıra e-ticaret/katalog için ürün fotoğrafçılığı ile düğün, nişan ve özel organizasyonlar için fotoğraf-video çekimi hizmeti de sunuyoruz.",
+      order: 7,
     },
   ];
 

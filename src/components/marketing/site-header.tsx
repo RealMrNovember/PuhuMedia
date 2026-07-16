@@ -20,7 +20,12 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { mainNav, services, siteConfig } from "@/lib/site-config";
+import {
+  mainNav,
+  serviceCategories,
+  services,
+  siteConfig,
+} from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
@@ -48,25 +53,31 @@ export function SiteHeader() {
                   Hizmetler
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[560px] grid-cols-2 gap-1 p-4">
-                    {services.map((service) => (
-                      <li key={service.slug}>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href={`/hizmetler/${service.slug}`}
-                            className="block rounded-lg px-3 py-2.5 transition-colors hover:bg-secondary"
-                          >
-                            <div className="text-sm font-medium text-foreground">
-                              {service.label}
-                            </div>
-                            <p className="mt-0.5 text-xs text-muted-foreground">
-                              {service.shortDescription}
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
+                  <div className="grid w-[820px] grid-cols-4 gap-6 p-5">
+                    {serviceCategories.map((category) => (
+                      <div key={category.key}>
+                        <p className="px-1 text-xs font-semibold tracking-wide text-primary uppercase">
+                          {category.label}
+                        </p>
+                        <ul className="mt-2 space-y-0.5">
+                          {services
+                            .filter((service) => service.category === category.key)
+                            .map((service) => (
+                              <li key={service.slug}>
+                                <NavigationMenuLink asChild>
+                                  <Link
+                                    href={`/hizmetler/${service.slug}`}
+                                    className="block rounded-lg px-2 py-2 text-sm font-medium text-foreground/85 transition-colors hover:bg-secondary hover:text-foreground"
+                                  >
+                                    {service.label}
+                                  </Link>
+                                </NavigationMenuLink>
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
@@ -85,7 +96,7 @@ export function SiteHeader() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <a
-              href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}
+              href={`tel:${siteConfig.contact.phoneRaw}`}
               className="flex items-center gap-1.5 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
             >
               <Phone className="size-3.5" />
@@ -119,21 +130,27 @@ export function SiteHeader() {
                     {item.label}
                   </Link>
                 ))}
-                <p className="mt-4 px-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-                  Hizmetler
-                </p>
-                {services.map((service) => (
-                  <Link
-                    key={service.slug}
-                    href={`/hizmetler/${service.slug}`}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground"
-                    )}
-                  >
-                    {service.label}
-                    <ChevronRight className="size-4 text-muted-foreground" />
-                  </Link>
+                {serviceCategories.map((category) => (
+                  <div key={category.key}>
+                    <p className="mt-4 px-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                      {category.label}
+                    </p>
+                    {services
+                      .filter((service) => service.category === category.key)
+                      .map((service) => (
+                        <Link
+                          key={service.slug}
+                          href={`/hizmetler/${service.slug}`}
+                          onClick={() => setOpen(false)}
+                          className={cn(
+                            "flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground"
+                          )}
+                        >
+                          {service.label}
+                          <ChevronRight className="size-4 text-muted-foreground" />
+                        </Link>
+                      ))}
+                  </div>
                 ))}
                 <Button asChild className="mt-6 w-full rounded-full">
                   <Link href="/teklif-al" onClick={() => setOpen(false)}>

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 const badges = [
   "Sağlık Sektörüne Özel Uzmanlık",
-  "SEO & Performans Odaklı",
+  "Genel Reklamcılık & Prodüksiyon",
   "Uçtan Uca Dijital Yönetim",
 ];
 
@@ -45,7 +45,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="mt-8 max-w-4xl text-balance font-heading text-4xl leading-[1.1] font-medium tracking-tight sm:text-5xl md:text-6xl"
         >
-          Sağlık markalarını dijitalde{" "}
+          Markaları dijitalde{" "}
           <span className="text-primary">güvenilir ve premium</span> bir
           konuma taşıyoruz
         </motion.h1>
@@ -56,9 +56,9 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="mt-6 max-w-2xl text-balance text-lg leading-relaxed text-background/70"
         >
-          Puhu Media; hastaneler, tıp merkezleri, estetik klinikleri ve sağlık
-          turizmi markaları için marka yönetiminden performans pazarlamasına
-          uçtan uca dijital çözümler sunan yaratıcı bir ajanstır.
+          Puhu Media; sağlık reklamcılığındaki uzmanlığının yanı sıra kurumsal
+          markalar, sosyal medya, prodüksiyon ve dijital pazarlama alanlarında
+          da uçtan uca çözümler sunan yaratıcı bir ajanstır.
         </motion.p>
 
         <motion.div
@@ -83,9 +83,7 @@ export function Hero() {
             variant="outline"
             className="rounded-full border-background/20 bg-transparent px-7 text-base text-background hover:bg-background/10 hover:text-background"
           >
-            <Link href="/hizmetler/saglik-reklamciligi">
-              Hizmetlerimizi İnceleyin
-            </Link>
+            <Link href="#hizmetler">Hizmetlerimizi İnceleyin</Link>
           </Button>
         </motion.div>
 

@@ -24,30 +24,32 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://puhumedia.com.tr";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Puhu Media | Sağlık Reklamcılığında Uzman Dijital Ajans",
+    default: "Puhu Media | Sağlık Reklamcılığında Uzman Premium Yaratıcı Ajans",
     template: "%s | Puhu Media",
   },
   description:
-    "Puhu Media; hastaneler, tıp merkezleri, estetik ve sağlık turizmi markaları için premium dijital pazarlama, SEO, sosyal medya ve marka yönetimi hizmetleri sunan yaratıcı ajanstır.",
+    "Puhu Media; sağlık reklamcılığından kurumsal markalara, sosyal medyadan prodüksiyona kadar geniş bir yelpazede premium dijital pazarlama, SEO, web tasarım, video ve fotoğraf hizmetleri sunan yaratıcı ajanstır.",
   keywords: [
     "sağlık reklamcılığı",
     "sağlık turizmi pazarlaması",
     "dijital ajans",
-    "hastane reklamcılığı",
-    "estetik klinik pazarlama",
+    "sosyal medya yönetimi",
+    "video prodüksiyon",
+    "ürün fotoğrafçılığı",
+    "kurumsal kimlik",
   ],
   openGraph: {
     type: "website",
     locale: "tr_TR",
     url: siteUrl,
     siteName: "Puhu Media",
-    title: "Puhu Media | Sağlık Reklamcılığında Uzman Dijital Ajans",
+    title: "Puhu Media | Sağlık Reklamcılığında Uzman Premium Yaratıcı Ajans",
     description:
-      "Hastaneler, klinikler ve sağlık turizmi markaları için premium dijital pazarlama çözümleri.",
+      "Sağlık reklamcılığından kurumsal markalara, sosyal medyadan prodüksiyona uçtan uca premium dijital ve yaratıcı çözümler.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Puhu Media | Sağlık Reklamcılığında Uzman Dijital Ajans",
+    title: "Puhu Media | Sağlık Reklamcılığında Uzman Premium Yaratıcı Ajans",
   },
   robots: {
     index: true,
