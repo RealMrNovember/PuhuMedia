@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Settings } from "lucide-react";
+import { Settings, GalleryHorizontal } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { logoutAction } from "@/server/actions/logout.action";
@@ -23,6 +23,12 @@ const modules = [
     label: "Instagram Gönderileri",
     description: "Sitede gösterilecek Instagram gönderilerini yönet",
     icon: InstagramIcon,
+  },
+  {
+    href: "/admin/hero-slider",
+    label: "Hero Slider",
+    description: "Ana sayfa slider'ını yönet — görsel veya YouTube video slaytları",
+    icon: GalleryHorizontal,
   },
 ];
 

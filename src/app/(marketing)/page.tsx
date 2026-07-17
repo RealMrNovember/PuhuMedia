@@ -1,4 +1,4 @@
-import { Hero } from "@/components/marketing/sections/hero";
+import { HeroSection } from "@/components/marketing/sections/hero-section";
 import { ReferenceStrip } from "@/components/marketing/sections/reference-strip";
 import { ServicesGrid } from "@/components/marketing/sections/services-grid";
 import { WhyUs } from "@/components/marketing/sections/why-us";
@@ -15,7 +15,7 @@ export const revalidate = 300;
 export default function HomePage() {
   return (
     <>
-      <Hero />
+      <HeroSection />
       <ReferenceStrip />
       <ServicesGrid />
       <WhyUs />
