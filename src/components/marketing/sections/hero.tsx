@@ -13,13 +13,13 @@ const badges = [
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-foreground text-background">
+    <section className="relative overflow-hidden bg-background text-foreground">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, var(--background) 1px, transparent 0)",
+            "radial-gradient(circle at 1px 1px, var(--foreground) 1px, transparent 0)",
           backgroundSize: "28px 28px",
         }}
       />
@@ -33,7 +33,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-flex items-center gap-2 rounded-full border border-background/15 bg-background/5 px-4 py-1.5 text-xs font-medium text-background/80"
+          className="inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-foreground/5 px-4 py-1.5 text-xs font-medium text-foreground/80"
         >
           <Sparkles className="size-3.5 text-primary" />
           Sağlık Reklamcılığında Uzman Dijital Ajans
@@ -54,11 +54,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 max-w-2xl text-balance text-lg leading-relaxed text-background/70"
+          className="mt-6 max-w-2xl text-balance text-lg leading-relaxed text-muted-foreground"
         >
           Puhu Media; sağlık reklamcılığındaki uzmanlığının yanı sıra kurumsal
           markalar, sosyal medya, prodüksiyon ve dijital pazarlama alanlarında
-          da uçtan uca çözümler sunan yaratıcı bir ajanstır.
+          da uçtan uca çözümler sunan yaratıcı bir ajanstır. Marka taşımıyoruz,
+          marka yaratıyoruz.
         </motion.p>
 
         <motion.div
@@ -81,7 +82,7 @@ export function Hero() {
             asChild
             size="lg"
             variant="outline"
-            className="rounded-full border-background/20 bg-transparent px-7 text-base text-background hover:bg-background/10 hover:text-background"
+            className="rounded-full border-foreground/20 bg-transparent px-7 text-base text-foreground hover:bg-foreground/10 hover:text-foreground"
           >
             <Link href="#hizmetler">Hizmetlerimizi İnceleyin</Link>
           </Button>
@@ -91,7 +92,7 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.45 }}
-          className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-background/60"
+          className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground"
         >
           {badges.map((badge) => (
             <li key={badge} className="flex items-center gap-2">

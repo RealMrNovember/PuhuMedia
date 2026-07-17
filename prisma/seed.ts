@@ -7,7 +7,7 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@puhumedia.com.tr";
+  const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "info@puhumedia.com.tr";
   const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "ChangeMe!2026";
 
   const passwordHash = await bcrypt.hash(adminPassword, 12);
@@ -31,7 +31,7 @@ async function main() {
     contact_phone: "+90 542 490 65 28",
     contact_whatsapp: "+905424906528",
     contact_email: "info@puhumedia.com.tr",
-    contact_address: "İstanbul, Türkiye",
+    contact_address: "Ankara, Türkiye",
     working_hours: "Pazartesi - Cuma, 09:00 - 18:00",
     social_instagram: "",
     social_linkedin: "",

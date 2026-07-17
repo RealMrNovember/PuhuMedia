@@ -2,7 +2,8 @@
 
 # Puhu Media
 
-**Sağlık reklamcılığında uzman, premium yaratıcı ajans platformu**
+**"Marka taşımıyoruz, marka yaratıyoruz."**
+Sağlık reklamcılığında uzman, premium yaratıcı ajans platformu
 
 [puhumedia.com.tr](https://puhumedia.com.tr)
 
@@ -12,9 +13,25 @@
 
 ## Hakkında
 
-Puhu Media'nın kurumsal web platformu; sağlık reklamcılığı ve sağlık turizmi pazarlamasındaki uzmanlığın yanı sıra kurumsal kimlik, dijital pazarlama, sosyal medya yönetimi ve prodüksiyon (video, ürün fotoğrafçılığı, özel gün çekimleri) hizmetlerini kapsayan, tamamen özel geliştirilmiş bir kurumsal site ve içerik yönetim sistemidir.
+Puhu Media'nın kurumsal web platformu; sağlık reklamcılığı ve sağlık turizmi pazarlamasındaki uzmanlığın yanı sıra dijital pazarlama, marka & kimlik, prodüksiyon alanlarında **18 hizmeti** kapsayan, tamamen özel geliştirilmiş bir kurumsal site ve içerik yönetim sistemidir.
 
-Site; pazarlama sayfaları, blog, referans/vaka analizi sistemi, teklif/lead formları ve kod değiştirmeden içerik yönetimine izin veren bir admin panelinden oluşur.
+Site; pazarlama sayfaları, blog, referans sistemi, Instagram vitrini, iletişim/teklif formları ve kod değiştirmeden içerik yönetimine izin veren bir admin panelinden oluşur.
+
+## Hizmetler
+
+| Sağlık Reklamcılığı | Dijital Pazarlama | Marka & Kimlik | Prodüksiyon & Görsel |
+| --- | --- | --- | --- |
+| Sağlık Reklamcılığı | Dijital Pazarlama Yönetimi | Marka Yönetimi | Görsel İşitsel Prodüksiyon |
+| Sağlık Turizmi Pazarlaması | SEO Yönetimi ve Danışmanlık | Kurumsal Kimlik Tasarımı | Ürün Fotoğrafçılığı |
+| | Google Ads | Grafik Tasarım | Özel Gün Çekimleri |
+| | Meta Reklamları | Web Tasarım & Yazılım | Kurumsal Fotoğraf Çekimi |
+| | Sosyal Medya Yönetimi | İçerik Üretimi | |
+| | Influencer Marketing | | |
+| | Yapay Zeka Destekli Pazarlama | | |
+
+## Site Haritası
+
+Ana Sayfa · Hakkımızda · Hizmetler (18 sayfa) · Referanslar · Blog · SSS · İletişim · Teklif Al · KVKK · Çerez Politikası · Gizlilik Politikası
 
 ## Teknoloji Yığını
 
@@ -22,7 +39,7 @@ Site; pazarlama sayfaları, blog, referans/vaka analizi sistemi, teklif/lead for
 | --- | --- |
 | Framework | [Next.js 16](https://nextjs.org) (App Router, Turbopack, React 19) |
 | Dil | TypeScript (strict mode) |
-| Stil | Tailwind CSS v4, [shadcn/ui](https://ui.shadcn.com) |
+| Stil | Tailwind CSS v4, [shadcn/ui](https://ui.shadcn.com), açık/koyu tema |
 | Animasyon | [Motion](https://motion.dev) (Framer Motion) |
 | Veritabanı | PostgreSQL |
 | ORM | [Prisma 7](https://www.prisma.io) (driver adapters, `prisma-client` generator) |
@@ -30,6 +47,15 @@ Site; pazarlama sayfaları, blog, referans/vaka analizi sistemi, teklif/lead for
 | Doğrulama | Zod |
 | E-posta | Nodemailer (SMTP) |
 | Görsel İşleme | sharp |
+
+## Öne Çıkan Özellikler
+
+- **Açık/koyu tema** — bağımsız (harici kütüphanesiz) tema sağlayıcı, sistem tercihine duyarlı
+- **Admin panelinden seçilebilir menü stili** — üst menü / mobil alt menü çubuğu / masaüstü yan menü
+- **Instagram vitrini** — admin panelinden gönderi linki ekleyerek resmi Instagram embed ile gösterim
+- **Site ayarları paneli** — iletişim bilgileri, sosyal medya, Google Maps, menü stili, analitik; tamamı veritabanından yönetiliyor
+- **Çalışan form altyapısı** — İletişim ve Teklif Al formları: DB kaydı, e-posta bildirimi, dosya yükleme, honeypot + rate-limit spam koruması
+- **18 hizmet sayfası** — her biri kendi SSS, özellik ve ilgili hizmetler bölümüyle
 
 ## Mimari
 
@@ -44,11 +70,9 @@ src/
   components/
     ui/                → shadcn/ui bileşenleri
     marketing/         → pazarlama sitesine özel bileşenler
-    admin/             → admin paneline özel bileşenler
   lib/                 → db, auth, email, site-config, güvenlik yardımcıları
   server/
     repositories/      → Prisma veri erişim katmanı
-    services/          → iş kuralları
     actions/           → server action'lar (form/CRUD giriş noktaları)
   proxy.ts             → admin rotalarını koruyan Next.js Proxy (eski adıyla Middleware)
 prisma/
@@ -88,13 +112,13 @@ npx prisma db seed
 npm run dev
 ```
 
-Site [http://localhost:3000](http://localhost:3000) adresinde, admin paneli [http://localhost:3000/admin](http://localhost:3000/admin) adresinde çalışır.
+Site [http://localhost:3000](http://localhost:3000) adresinde, admin paneli [http://localhost:3000/admin](http://localhost:3000/admin) adresinde çalışır. Admin giriş bilgileri ayrıca proje sahibiyle paylaşılmıştır (bu dosyada tutulmaz).
 
 ### Faydalı Komutlar
 
 ```bash
 npm run dev          # geliştirme sunucusu (Turbopack)
-npm run build         # production build
+npm run build         # production build (standalone çıktı)
 npm run start          # production sunucusu
 npm run lint            # ESLint
 npx tsc --noEmit         # tip kontrolü
@@ -104,7 +128,18 @@ npx prisma migrate dev     # yeni migration oluştur/uygula
 
 ## Dağıtım (Deployment)
 
-Uygulama local ortamda build alınıp, standalone Next.js çıktısı üzerinden üretim sunucusuna dağıtılacak şekilde tasarlanmıştır (PM2 + Nginx reverse proxy + PostgreSQL). Dağıtım betikleri `scripts/` dizininde yer alır.
+Uygulama local ortamda build alınır, Next.js standalone çıktısı üretim sunucusuna aktarılır. `scripts/deploy.sh` bu süreci otomatikleştirir: build → paketleme → SSH ile aktarım → migration → PM2 restart → sağlık kontrolü → otomatik rollback.
+
+Üretim sunucusundaki yapı (yalnızca bu projeye ait, sunucudaki diğer sitelerden tamamen izole):
+
+- **Node.js** — siteye özel, izole çalışma zamanı (`.node/`), sistem Node'undan bağımsız
+- **PM2** — siteye özel `PM2_HOME`, sunucudaki diğer PM2 örnekleriyle çakışmaz
+- **PostgreSQL** — izole Docker container, kendine özel port
+- **Nginx** — bu domain'e özel reverse-proxy vhost konfigürasyonu, Let's Encrypt SSL sertifikası
+
+```bash
+./scripts/deploy.sh
+```
 
 ## Lisans
 

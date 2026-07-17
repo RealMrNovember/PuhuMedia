@@ -34,8 +34,8 @@ export default async function MarketingLayout({
         {children}
       </main>
       <SiteFooter className={cn(isSidebar && "lg:pl-64")} />
-      <WhatsappButton className={cn(isBottomBar && "bottom-20 lg:bottom-8")} />
-      {isBottomBar && <BottomNav />}
+      <WhatsappButton className={cn(isBottomBar && "max-lg:hidden")} />
+      {isBottomBar && <BottomNav whatsapp={contact.whatsapp} />}
     </>
   );
 }

@@ -26,7 +26,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://puhumedia.com.tr";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Puhu Media | Sağlık Reklamcılığında Uzman Premium Yaratıcı Ajans",
+    default: "Puhu Media | Marka Taşımıyoruz, Marka Yaratıyoruz",
     template: "%s | Puhu Media",
   },
   description:
@@ -45,13 +45,13 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: siteUrl,
     siteName: "Puhu Media",
-    title: "Puhu Media | Sağlık Reklamcılığında Uzman Premium Yaratıcı Ajans",
+    title: "Puhu Media | Marka Taşımıyoruz, Marka Yaratıyoruz",
     description:
       "Sağlık reklamcılığından kurumsal markalara, sosyal medyadan prodüksiyona uçtan uca premium dijital ve yaratıcı çözümler.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Puhu Media | Sağlık Reklamcılığında Uzman Premium Yaratıcı Ajans",
+    title: "Puhu Media | Marka Taşımıyoruz, Marka Yaratıyoruz",
   },
   robots: {
     index: true,

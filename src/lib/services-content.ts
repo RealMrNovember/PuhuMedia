@@ -455,17 +455,17 @@ export const servicesContent: Record<string, ServicePageContent> = {
       },
     ],
   },
-  "video-produksiyon": {
-    heroTagline: "Video Prodüksiyon",
+  "gorsel-isitsel-produksiyon": {
+    heroTagline: "Görsel İşitsel Prodüksiyon",
     heroDescription:
-      "Reklam filmi, kurumsal tanıtım filmi ve sosyal medya videolarında senaryodan son montaja uçtan uca prodüksiyon.",
+      "Reklam filmi, kurumsal tanıtım filmi, podcast ve ses prodüksiyonunda senaryodan son mikse uçtan uca üretim.",
     highlights: [
       "Reklam & tanıtım filmi çekimi",
-      "Sosyal medya video içerikleri",
+      "Ses tasarımı ve podcast prodüksiyonu",
       "Profesyonel kurgu ve post prodüksiyon",
     ],
     overview: [
-      "Video; markanızın hikayesini en etkili şekilde anlatan formattır. Reklam filmlerinden kurumsal tanıtım videolarına, sosyal medya içeriklerinden ürün videolarına kadar senaryo, çekim ve kurgu süreçlerinin tamamını profesyonel ekipmanla yönetiyoruz.",
+      "Görsel ve işitsel içerik; markanızın hikayesini en etkili şekilde anlatan formattır. Reklam filmlerinden kurumsal tanıtım videolarına, podcast'ten ses tasarımına kadar senaryo, çekim, kayıt ve kurgu süreçlerinin tamamını profesyonel ekipmanla yönetiyoruz.",
     ],
     features: [
       {
@@ -624,6 +624,181 @@ export const servicesContent: Record<string, ServicePageContent> = {
         question: "Kaç kişilik ekipler için çekim yapabiliyorsunuz?",
         answer:
           "Tek doktor portresinden geniş ekip çekimlerine kadar her ölçekte hizmet veriyoruz.",
+      },
+    ],
+  },
+  "dijital-pazarlama-yonetimi": {
+    heroTagline: "Dijital Pazarlama Yönetimi",
+    heroDescription:
+      "SEO'dan sosyal medyaya, reklamdan içeriğe kadar tüm dijital kanallarınızı tek bir stratejik çatı altında yönetiyoruz.",
+    highlights: [
+      "Tek çatı altında kanal yönetimi",
+      "Aylık strateji ve performans döngüsü",
+      "Şeffaf, konsolide raporlama",
+    ],
+    overview: [
+      "Dağınık kanallarda tek başına yürütülen çalışmalar, tutarsız marka mesajına ve kaybolan bütçeye yol açar. Dijital Pazarlama Yönetimi hizmetimizle; SEO, reklam, sosyal medya ve içerik çalışmalarınızı tek bir stratejik yol haritasında birleştiriyor, her kanalın birbirini güçlendirmesini sağlıyoruz.",
+      "Bu hizmet, markanızın dijital varlığını uçtan uca yöneten bir strateji ortağı gibi çalışır; ayrı ayrı ajans veya freelancer yönetme yükünü üzerinizden alır.",
+    ],
+    features: [
+      {
+        title: "Bütünsel Kanal Stratejisi",
+        description: "SEO, reklam, sosyal medya ve içerik çalışmalarının tek stratejide birleştirilmesi.",
+      },
+      {
+        title: "Bütçe Optimizasyonu",
+        description: "Kanallar arası bütçe dağılımının performansa göre sürekli optimize edilmesi.",
+      },
+      {
+        title: "Aylık Strateji Toplantıları",
+        description: "Düzenli değerlendirme toplantılarıyla stratejinin güncel tutulması.",
+      },
+      {
+        title: "Konsolide Raporlama",
+        description: "Tüm kanalların performansını tek bir panelde şeffafça sunan raporlama.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Mevcut ajans veya çalışanlarımızla birlikte çalışabilir misiniz?",
+        answer:
+          "Evet, mevcut ekibinizle koordineli şekilde çalışarak stratejik yönlendirme ve denetim sağlayabiliriz.",
+      },
+      {
+        question: "Hangi büyüklükteki markalar için uygundur?",
+        answer:
+          "Birden fazla dijital kanalı aktif kullanan ve bunları tek stratejide birleştirmek isteyen küçük ve orta ölçekli markalar için idealdir.",
+      },
+    ],
+  },
+  "influencer-marketing": {
+    heroTagline: "Influencer Marketing",
+    heroDescription:
+      "Markanızın değerleriyle örtüşen doğru içerik üreticileriyle güvenilir ve etkili iş birlikleri kuruyoruz.",
+    highlights: [
+      "Marka uyumlu içerik üretici seçimi",
+      "Sağlık sektörüne uygun uyumluluk kontrolü",
+      "Performans takibi ve raporlama",
+    ],
+    overview: [
+      "Influencer iş birlikleri; doğru kişiyle yapıldığında güçlü bir güven inşa aracına dönüşür. Marka değerlerinize uygun içerik üreticilerini belirler, iş birliğinin şeffaf ve ölçülebilir sonuçlar getirmesini sağlarız.",
+      "Sağlık sektöründe çalışan markalar için, platformların ve mevzuatın izin verdiği sınırlar içinde uyumlu içerik üretici stratejileri kurgularız.",
+    ],
+    features: [
+      {
+        title: "İçerik Üretici Seçimi",
+        description: "Marka değerlerinize ve hedef kitlenize uygun içerik üreticilerinin belirlenmesi.",
+      },
+      {
+        title: "İş Birliği Yönetimi",
+        description: "Brief hazırlığından içerik onayına kadar tüm sürecin yönetilmesi.",
+      },
+      {
+        title: "Mevzuat Uyumluluğu",
+        description: "Sağlık sektörü gibi hassas alanlarda platform ve yasal uyumluluk kontrolü.",
+      },
+      {
+        title: "Performans Ölçümleme",
+        description: "Erişim, etkileşim ve dönüşüm verileriyle iş birliği performansının raporlanması.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Mikro influencer'larla da çalışıyor musunuz?",
+        answer:
+          "Evet, hedef kitlenize göre mikro ve makro influencer'ları içeren karma stratejiler kurgulayabiliriz.",
+      },
+      {
+        question: "Sağlık sektöründe influencer iş birliği yapılabilir mi?",
+        answer:
+          "Evet, platform politikaları ve Sağlık Bakanlığı mevzuatına uygun şekilde, dikkatle kurgulanmış iş birlikleri mümkündür.",
+      },
+    ],
+  },
+  "marka-yonetimi": {
+    heroTagline: "Marka Yönetimi",
+    heroDescription:
+      "Markanızı taşımakla yetinmiyoruz; onu yeniden, daha güçlü ve daha tutarlı şekilde yaratıyoruz.",
+    highlights: [
+      "Marka stratejisi ve konumlandırma",
+      "Tutarlı marka sesi ve iletişim dili",
+      "Uzun vadeli marka büyüme planı",
+    ],
+    overview: [
+      "Marka yönetimi, sadece var olan bir logoyu ve rengi korumak değildir. Puhu Media olarak markanızın konumlandırmasını, iletişim dilini ve büyüme stratejisini yeniden kurgular; her temas noktasında tutarlı ve güçlü bir marka deneyimi yaratırız.",
+      "Amacımız markanızı devralıp olduğu gibi sürdürmek değil, onu bir sonraki seviyeye taşıyacak şekilde yeniden yaratmaktır.",
+    ],
+    features: [
+      {
+        title: "Marka Konumlandırma",
+        description: "Rakip analizleri ve hedef kitle içgörüleriyle net bir marka konumlandırması.",
+      },
+      {
+        title: "Marka Sesi & Dili",
+        description: "Tüm iletişim kanallarında tutarlı bir ton ve dil kimliğinin oluşturulması.",
+      },
+      {
+        title: "Marka Büyüme Stratejisi",
+        description: "Kısa ve uzun vadeli hedeflere uygun marka gelişim yol haritası.",
+      },
+      {
+        title: "Marka Deneyimi Yönetimi",
+        description: "Web sitesinden sosyal medyaya tüm temas noktalarında tutarlı deneyim.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Marka yönetimi ile kurumsal kimlik tasarımı arasındaki fark nedir?",
+        answer:
+          "Kurumsal kimlik tasarımı görsel kimliğe odaklanırken, marka yönetimi stratejiyi, sesi ve uzun vadeli konumlandırmayı kapsar.",
+      },
+      {
+        question: "Mevcut markamızı yeniden yapılandırmak (rebranding) mümkün mü?",
+        answer:
+          "Evet, mevcut markanızı analiz ederek ihtiyaca göre kapsamlı veya kademeli bir yeniden yapılandırma öneriyoruz.",
+      },
+    ],
+  },
+  "grafik-tasarim": {
+    heroTagline: "Grafik Tasarım",
+    heroDescription:
+      "Basılı ve dijital tüm mecralar için markanızı doğru yansıtan özgün grafik tasarım çözümleri.",
+    highlights: [
+      "Sosyal medya ve dijital tasarım",
+      "Basılı materyal tasarımı",
+      "Marka kimliğine tam uyum",
+    ],
+    overview: [
+      "Grafik tasarım, markanızın her görsel temas noktasında tutarlı ve profesyonel görünmesini sağlar. Sosyal medya görsellerinden broşürlere, sunumlardan ambalaj tasarımına kadar geniş bir yelpazede özgün ve marka kimliğine uygun tasarımlar üretiyoruz.",
+    ],
+    features: [
+      {
+        title: "Sosyal Medya Tasarımları",
+        description: "Platforma özel, marka kimliğine uygun sosyal medya görselleri.",
+      },
+      {
+        title: "Basılı Materyal Tasarımı",
+        description: "Broşür, katalog, afiş gibi basılı materyallerin tasarımı.",
+      },
+      {
+        title: "Sunum & Doküman Tasarımı",
+        description: "Kurumsal sunumlar ve dokümanlar için profesyonel şablon tasarımı.",
+      },
+      {
+        title: "Ambalaj & Etiket Tasarımı",
+        description: "Ürün ambalajı ve etiket tasarımında marka kimliğine uygun çözümler.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Marka kimliğimiz yoksa grafik tasarım hizmeti alabilir miyiz?",
+        answer:
+          "Evet, gerekirse önce temel bir kurumsal kimlik çalışması yapıp ardından grafik tasarım ihtiyaçlarınızı karşılayabiliriz.",
+      },
+      {
+        question: "Tasarım dosyalarını teslim ediyor musunuz?",
+        answer:
+          "Evet, tüm projelerde düzenlenebilir kaynak dosyalar ve kullanıma hazır formatlar teslim edilir.",
       },
     ],
   },

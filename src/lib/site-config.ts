@@ -3,7 +3,7 @@ export type NavStyle = "topbar" | "bottombar" | "sidebar";
 export const siteConfig = {
   name: "Puhu Media",
   domain: "puhumedia.com.tr",
-  tagline: "Sağlık Reklamcılığında Uzman Premium Yaratıcı Ajans",
+  tagline: "Marka Taşımıyoruz, Marka Yaratıyoruz",
   description:
     "Puhu Media; sağlık reklamcılığından kurumsal markalara, sosyal medyadan prodüksiyona kadar geniş bir yelpazede premium dijital pazarlama ve yaratıcı çözümler sunan ajanstır.",
   contact: {
@@ -11,7 +11,7 @@ export const siteConfig = {
     phoneRaw: "+905424906528",
     whatsapp: "+905424906528",
     email: "info@puhumedia.com.tr",
-    address: "İstanbul, Türkiye",
+    address: "Ankara, Türkiye",
     workingHours: "Pazartesi – Cuma, 09:00 – 18:00",
   },
   social: {
@@ -24,13 +24,13 @@ export const siteConfig = {
 export type ServiceCategoryKey =
   | "saglik"
   | "dijital-pazarlama"
-  | "marka-web"
+  | "marka-kimlik"
   | "produksiyon";
 
 export const serviceCategories: { key: ServiceCategoryKey; label: string }[] = [
   { key: "saglik", label: "Sağlık Reklamcılığı" },
   { key: "dijital-pazarlama", label: "Dijital Pazarlama" },
-  { key: "marka-web", label: "Marka & Web" },
+  { key: "marka-kimlik", label: "Marka & Kimlik" },
   { key: "produksiyon", label: "Prodüksiyon & Görsel" },
 ];
 
@@ -55,8 +55,14 @@ export const services: ServiceNavItem[] = [
     category: "saglik",
   },
   {
+    slug: "dijital-pazarlama-yonetimi",
+    label: "Dijital Pazarlama Yönetimi",
+    shortDescription: "Tüm dijital kanalları tek stratejide birleştiren yönetim",
+    category: "dijital-pazarlama",
+  },
+  {
     slug: "seo",
-    label: "SEO",
+    label: "SEO Yönetimi ve Danışmanlık",
     shortDescription: "Teknik SEO ve organik büyüme stratejileri",
     category: "dijital-pazarlama",
   },
@@ -79,33 +85,51 @@ export const services: ServiceNavItem[] = [
     category: "dijital-pazarlama",
   },
   {
+    slug: "influencer-marketing",
+    label: "Influencer Marketing",
+    shortDescription: "Doğru içerik üreticileriyle güvenilir marka iş birlikleri",
+    category: "dijital-pazarlama",
+  },
+  {
     slug: "yapay-zeka-destekli-pazarlama",
     label: "Yapay Zeka Destekli Pazarlama",
     shortDescription: "AI destekli içerik, otomasyon ve performans optimizasyonu",
     category: "dijital-pazarlama",
   },
   {
+    slug: "marka-yonetimi",
+    label: "Marka Yönetimi",
+    shortDescription: "Markanızı taşımak değil, yeniden yaratmak için strateji",
+    category: "marka-kimlik",
+  },
+  {
     slug: "kurumsal-kimlik",
-    label: "Kurumsal Kimlik",
+    label: "Kurumsal Kimlik Tasarımı",
     shortDescription: "Marka kimliği ve görsel dil tasarımı",
-    category: "marka-web",
+    category: "marka-kimlik",
+  },
+  {
+    slug: "grafik-tasarim",
+    label: "Grafik Tasarım",
+    shortDescription: "Basılı ve dijital tüm mecralar için görsel tasarım",
+    category: "marka-kimlik",
   },
   {
     slug: "web-tasarim",
     label: "Web Tasarım & Yazılım",
     shortDescription: "Premium, hızlı ve dönüşüm odaklı web siteleri",
-    category: "marka-web",
+    category: "marka-kimlik",
   },
   {
     slug: "icerik-uretimi",
     label: "İçerik Üretimi",
     shortDescription: "Metin, görsel ve video içerik stratejisi",
-    category: "marka-web",
+    category: "marka-kimlik",
   },
   {
-    slug: "video-produksiyon",
-    label: "Video Prodüksiyon",
-    shortDescription: "Reklam filmi, kurumsal film ve sosyal medya videoları",
+    slug: "gorsel-isitsel-produksiyon",
+    label: "Görsel İşitsel Prodüksiyon",
+    shortDescription: "Reklam filmi, kurumsal film ve ses prodüksiyonu",
     category: "produksiyon",
   },
   {

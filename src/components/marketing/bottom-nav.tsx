@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, LayoutGrid, Menu, Phone, Send } from "lucide-react";
+import { Home, LayoutGrid, Menu, Send } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -12,6 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Logo } from "@/components/marketing/logo";
+import { WhatsappIcon } from "@/components/marketing/social-icons";
 import { MobileNavContent } from "@/components/marketing/mobile-nav-content";
 import { cn } from "@/lib/utils";
 
@@ -20,15 +21,15 @@ const tabs = [
   { label: "Hizmetler", href: "/#hizmetler", icon: LayoutGrid },
 ];
 
-const trailingTabs = [
-  { label: "İletişim", href: "/iletisim", icon: Phone },
-];
-
-export function BottomNav() {
+export function BottomNav({ whatsapp }: { whatsapp: string }) {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
 
   if (pathname?.startsWith("/admin")) return null;
+
+  const whatsappMessage = encodeURIComponent(
+    "Merhaba, Puhu Media hakkında bilgi almak istiyorum."
+  );
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden">
@@ -60,22 +61,15 @@ export function BottomNav() {
           <span className="text-[11px] font-medium text-primary">Teklif Al</span>
         </Link>
 
-        {trailingTabs.map((tab) => {
-          const active = pathname?.startsWith(tab.href);
-          return (
-            <Link
-              key={tab.href}
-              href={tab.href}
-              className={cn(
-                "flex flex-1 flex-col items-center gap-1 rounded-xl px-2 py-1.5 text-[11px] font-medium transition-colors",
-                active ? "text-primary" : "text-muted-foreground"
-              )}
-            >
-              <tab.icon className="size-5" />
-              {tab.label}
-            </Link>
-          );
-        })}
+        <a
+          href={`https://wa.me/${whatsapp.replace("+", "")}?text=${whatsappMessage}`}
+          target="_blank"
+          rel="noreferrer"
+          className="flex flex-1 flex-col items-center gap-1 rounded-xl px-2 py-1.5 text-[11px] font-medium text-muted-foreground transition-colors"
+        >
+          <WhatsappIcon className="size-5 text-[#25D366]" />
+          WhatsApp
+        </a>
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
