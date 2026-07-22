@@ -45,3 +45,8 @@ next-env.d.ts
 
 # uploads
 /public/uploads
+
+# Local AI agent tooling (do not publish)
+.claude/
+CLAUDE.md
+AGENTS.md
