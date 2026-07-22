@@ -23,10 +23,7 @@ async function main() {
     },
   });
 
-  // NOTE: `update` currently overwrites existing values on every reseed
-  // (pre-launch convenience). Switch to `update: {}` (create-only) once the
-  // admin panel holds real production settings, so a reseed can never
-  // clobber live admin edits.
+  // Create-only: never overwrite live admin edits on reseed.
   const defaultSettings: Record<string, unknown> = {
     contact_phone: "+90 542 490 65 28",
     contact_whatsapp: "+905424906528",
@@ -45,7 +42,7 @@ async function main() {
   for (const [key, value] of Object.entries(defaultSettings)) {
     await prisma.siteSetting.upsert({
       where: { key },
-      update: { value: value as never },
+      update: {},
       create: { key, value: value as never },
     });
   }
@@ -178,6 +175,92 @@ async function main() {
       where: { slug: reference.slug },
       update: {},
       create: { ...reference, gallery: [], isPublished: true },
+    });
+  }
+
+  // CMS pages + services: create-only so reseed does not wipe admin edits.
+  // For force-fill use: npm run db:seed-cms
+  const { services } = await import("../src/lib/site-config");
+  const { servicesContent } = await import("../src/lib/services-content");
+
+  const aboutContent = {
+    heroTitle: "Marka taşımıyoruz, marka yaratıyoruz",
+    heroBody:
+      "Puhu Media, sağlık reklamcılığındaki uzmanlığını kurumsal markalara, sosyal medyadan prodüksiyona uzanan geniş bir yaratıcı hizmet yelpazesiyle birleştiren premium bir ajanstır.",
+    mission:
+      "Sağlık kurumlarının ve kurumsal markaların dijital dünyada güvenilir, tutarlı ve premium bir konuma ulaşmasını sağlamak.",
+    vision:
+      "Türkiye'nin sağlık reklamcılığı alanında referans gösterilen bir yaratıcı ajans olmak.",
+    values: [
+      { title: "Yaratıcılık", description: "Özgün ve akılda kalıcı fikirler." },
+      { title: "Stratejik Bakış", description: "Yaratıcılığı ölçülebilir hedeflerle birleştiririz." },
+      { title: "Şeffaflık", description: "Açık iletişim ve dürüst raporlama." },
+      { title: "Sürekli Gelişim", description: "Markaları bir adım öne taşırız." },
+    ],
+  };
+
+  await prisma.cmsPage.upsert({
+    where: { slug: "hakkimizda" },
+    update: {},
+    create: {
+      slug: "hakkimizda",
+      title: "Hakkımızda",
+      content: aboutContent,
+      seoTitle: "Hakkımızda",
+      seoDescription:
+        "Puhu Media; sağlık reklamcılığından kurumsal markalara uzanan premium yaratıcı ajans.",
+    },
+  });
+
+  const legalPlaceholders = [
+    {
+      slug: "kvkk",
+      title: "KVKK Aydınlatma Metni",
+      html: "<p>KVKK aydınlatma metni içeriği. Detaylı içerik için seed-cms çalıştırın.</p>",
+    },
+    {
+      slug: "gizlilik-politikasi",
+      title: "Gizlilik Politikası",
+      html: "<p>Gizlilik politikası içeriği. Detaylı içerik için seed-cms çalıştırın.</p>",
+    },
+    {
+      slug: "cerez-politikasi",
+      title: "Çerez Politikası",
+      html: "<p>Çerez politikası içeriği. Detaylı içerik için seed-cms çalıştırın.</p>",
+    },
+  ];
+
+  for (const page of legalPlaceholders) {
+    await prisma.cmsPage.upsert({
+      where: { slug: page.slug },
+      update: {},
+      create: {
+        slug: page.slug,
+        title: page.title,
+        content: { html: page.html },
+        seoTitle: page.title,
+      },
+    });
+  }
+
+  let order = 0;
+  for (const service of services) {
+    const content = servicesContent[service.slug];
+    if (!content) continue;
+    await prisma.servicePage.upsert({
+      where: { slug: service.slug },
+      update: {},
+      create: {
+        slug: service.slug,
+        label: service.label,
+        shortDescription: service.shortDescription,
+        category: service.category,
+        content,
+        seoTitle: service.label,
+        seoDescription: content.heroDescription,
+        isPublished: true,
+        order: order++,
+      },
     });
   }
 

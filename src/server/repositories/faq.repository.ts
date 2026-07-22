@@ -7,3 +7,18 @@ export function getPublishedFaqs(limit?: number) {
     take: limit,
   });
 }
+
+export function getAllFaqs() {
+  return prisma.fAQ.findMany({
+    orderBy: { order: "asc" },
+  });
+}
+
+export function getFaqById(id: string) {
+  return prisma.fAQ.findUnique({ where: { id } });
+}
+
+export function countFaqs() {
+  return prisma.fAQ.count();
+}
+

@@ -13,3 +13,22 @@ export function getCaseStudyBySlug(slug: string) {
     where: { slug, status: "PUBLISHED" },
   });
 }
+
+export function getAllCaseStudies() {
+  return prisma.caseStudy.findMany({
+    orderBy: { updatedAt: "desc" },
+    include: { reference: true },
+  });
+}
+
+export function getCaseStudyById(id: string) {
+  return prisma.caseStudy.findUnique({
+    where: { id },
+    include: { reference: true },
+  });
+}
+
+export function countCaseStudies() {
+  return prisma.caseStudy.count();
+}
+

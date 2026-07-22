@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { getSiteSettings } from "@/server/repositories/site-setting.repository";
+import { PageHeader } from "@/components/admin/page-header";
 import { SettingsForm } from "./settings-form";
 
 export const metadata: Metadata = {
@@ -34,21 +33,11 @@ export default async function AdminSettingsPage() {
   );
 
   return (
-    <div className="container-brand max-w-3xl py-10">
-      <Link
-        href="/admin"
-        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-      >
-        <ArrowLeft className="size-4" />
-        Panele Dön
-      </Link>
-      <h1 className="mt-4 font-heading text-2xl font-medium text-foreground">
-        Site Ayarları
-      </h1>
-      <p className="mt-1 text-sm text-muted-foreground">
-        İletişim bilgileri, sosyal medya, menü stili ve analitik ayarlarını
-        buradan yönetebilirsiniz.
-      </p>
+    <div className="mx-auto max-w-3xl">
+      <PageHeader
+        title="Site Ayarları"
+        description="İletişim bilgileri, sosyal medya, menü stili ve analitik ayarlarını buradan yönetebilirsiniz."
+      />
 
       <div className="mt-8 rounded-2xl border border-border bg-card p-6 sm:p-8">
         <SettingsForm values={values} />

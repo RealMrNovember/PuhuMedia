@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { AdminShell } from "@/components/admin/admin-shell";
 
 export default async function AdminProtectedLayout({
   children,
@@ -12,5 +13,15 @@ export default async function AdminProtectedLayout({
     redirect("/admin/login");
   }
 
-  return <div className="min-h-svh bg-secondary/20">{children}</div>;
+  return (
+    <AdminShell
+      user={{
+        name: session.user.name ?? "Kullanıcı",
+        email: session.user.email ?? "",
+        role: session.user.role,
+      }}
+    >
+      {children}
+    </AdminShell>
+  );
 }

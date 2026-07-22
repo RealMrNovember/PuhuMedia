@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check } from "lucide-react";
-import { services, serviceCategories } from "@/lib/site-config";
-import { servicesContent } from "@/lib/services-content";
+import { serviceCategories, services } from "@/lib/site-config";
 import { serviceIcons } from "@/lib/service-icons";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { Reveal } from "@/components/marketing/reveal";
@@ -15,10 +14,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { CtaBanner } from "@/components/marketing/sections/cta-banner";
+import {
+  getPublishedServicePages,
+  resolveServicePage,
+} from "@/server/repositories/service-page.repository";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const rows = await getPublishedServicePages();
+  if (rows.length > 0) {
+    return rows.map((service) => ({ slug: service.slug }));
+  }
   return services.map((service) => ({ slug: service.slug }));
 }
 
@@ -28,34 +35,44 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = services.find((s) => s.slug === slug);
-  const content = servicesContent[slug];
-  if (!service || !content) return {};
+  const service = await resolveServicePage(slug);
+  if (!service) return {};
 
   return {
-    title: service.label,
-    description: content.heroDescription,
+    title: service.seoTitle ?? service.label,
+    description: service.seoDescription ?? service.content.heroDescription,
     openGraph: {
       title: `${service.label} | Puhu Media`,
-      description: content.heroDescription,
+      description: service.seoDescription ?? service.content.heroDescription,
     },
   };
 }
 
-export default async function ServicePage({
+export default async function ServiceDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = services.find((s) => s.slug === slug);
-  const content = servicesContent[slug];
+  const service = await resolveServicePage(slug);
+  if (!service) notFound();
 
-  if (!service || !content) notFound();
-
+  const { content } = service;
   const Icon = serviceIcons[slug];
   const category = serviceCategories.find((c) => c.key === service.category);
-  const related = services
+
+  const allPublished = await getPublishedServicePages();
+  const relatedSource =
+    allPublished.length > 0
+      ? allPublished.map((s) => ({
+          slug: s.slug,
+          label: s.label,
+          shortDescription: s.shortDescription,
+          category: s.category,
+        }))
+      : services;
+
+  const related = relatedSource
     .filter((s) => s.category === service.category && s.slug !== slug)
     .slice(0, 3);
 
@@ -82,9 +99,9 @@ export default async function ServicePage({
                 </li>
               ))}
             </ul>
-            <Button asChild size="lg" className="mt-9 rounded-full px-7">
+            <Button asChild size="lg" className="mt-10 rounded-full">
               <Link href="/teklif-al">
-                Teklif Al
+                Teklif Alın
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
@@ -93,28 +110,49 @@ export default async function ServicePage({
       </section>
 
       <section className="section-padding">
-        <div className="container-brand grid gap-16 lg:grid-cols-[1fr_1.4fr]">
-          <Reveal>
-            <div className="lg:sticky lg:top-28">
-              <h2 className="font-heading text-2xl font-medium text-foreground">
-                Genel Bakış
+        <div className="container-brand grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+          <div className="space-y-5">
+            {content.overview.map((paragraph) => (
+              <Reveal key={paragraph.slice(0, 24)}>
+                <p className="text-base leading-relaxed text-muted-foreground">
+                  {paragraph}
+                </p>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.1}>
+            <div className="rounded-2xl border border-border bg-card p-6">
+              <h2 className="font-heading text-lg font-medium text-foreground">
+                Neler sunuyoruz?
               </h2>
-              <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted-foreground">
-                {content.overview.map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
+              <ul className="mt-5 space-y-3">
+                {content.highlights.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-sm text-muted-foreground"
+                  >
+                    <Check className="mt-0.5 size-4 shrink-0 text-primary" />
+                    {item}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </Reveal>
+        </div>
+      </section>
 
-          <div className="grid gap-5 sm:grid-cols-2">
+      <section className="section-padding bg-secondary/40">
+        <div className="container-brand">
+          <SectionHeading
+            eyebrow="Kapsam"
+            title="Hizmetin temel bileşenleri"
+            className="max-w-2xl"
+          />
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
             {content.features.map((feature, index) => (
-              <Reveal key={feature.title} delay={(index % 2) * 0.08}>
+              <Reveal key={feature.title} delay={index * 0.05}>
                 <div className="h-full rounded-2xl border border-border bg-card p-6">
-                  <div className="flex size-9 items-center justify-center rounded-lg bg-secondary text-primary">
-                    <Check className="size-4" />
-                  </div>
-                  <h3 className="mt-4 font-heading text-base font-medium text-foreground">
+                  <h3 className="font-heading text-base font-medium text-foreground">
                     {feature.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -128,58 +166,47 @@ export default async function ServicePage({
       </section>
 
       {content.faqs.length > 0 ? (
-        <section className="section-padding bg-secondary/40">
+        <section className="section-padding">
           <div className="container-brand max-w-3xl">
             <SectionHeading
-              eyebrow="Sık Sorulan Sorular"
-              title={`${service.label} hakkında merak edilenler`}
+              eyebrow="SSS"
+              title="Sık sorulan sorular"
+              className="max-w-xl"
             />
-            <Reveal delay={0.1} className="mt-8">
-              <Accordion type="single" collapsible>
-                {content.faqs.map((faq, index) => (
-                  <AccordionItem key={index} value={`faq-${index}`}>
-                    <AccordionTrigger className="text-left font-heading text-base font-medium">
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </Reveal>
+            <Accordion type="single" collapsible className="mt-10">
+              {content.faqs.map((faq, index) => (
+                <AccordionItem key={faq.question} value={`faq-${index}`}>
+                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionContent>{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </section>
       ) : null}
 
       {related.length > 0 ? (
-        <section className="section-padding">
+        <section className="section-padding border-t border-border">
           <div className="container-brand">
-            <SectionHeading eyebrow={category?.label} title="İlgili Hizmetler" />
-            <div className="mt-10 grid gap-5 sm:grid-cols-3">
-              {related.map((relatedService, index) => {
-                const RelatedIcon = serviceIcons[relatedService.slug];
-                return (
-                  <Reveal key={relatedService.slug} delay={index * 0.08}>
-                    <Link
-                      href={`/hizmetler/${relatedService.slug}`}
-                      className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/40"
-                    >
-                      {RelatedIcon ? (
-                        <div className="flex size-10 items-center justify-center rounded-lg bg-secondary text-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                          <RelatedIcon className="size-4.5" />
-                        </div>
-                      ) : null}
-                      <h3 className="mt-4 font-heading text-base font-medium text-foreground">
-                        {relatedService.label}
-                      </h3>
-                      <p className="mt-1.5 text-sm text-muted-foreground">
-                        {relatedService.shortDescription}
-                      </p>
-                    </Link>
-                  </Reveal>
-                );
-              })}
+            <SectionHeading
+              eyebrow="İlgili"
+              title="Aynı kategorideki diğer hizmetler"
+            />
+            <div className="mt-10 grid gap-4 md:grid-cols-3">
+              {related.map((item) => (
+                <Link
+                  key={item.slug}
+                  href={`/hizmetler/${item.slug}`}
+                  className="rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40"
+                >
+                  <h3 className="font-heading text-base font-medium text-foreground">
+                    {item.label}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {item.shortDescription}
+                  </p>
+                </Link>
+              ))}
             </div>
           </div>
         </section>

@@ -7,3 +7,18 @@ export function getPublishedTestimonials(limit = 6) {
     take: limit,
   });
 }
+
+export function getAllTestimonials() {
+  return prisma.testimonial.findMany({
+    orderBy: { order: "asc" },
+  });
+}
+
+export function getTestimonialById(id: string) {
+  return prisma.testimonial.findUnique({ where: { id } });
+}
+
+export function countTestimonials() {
+  return prisma.testimonial.count();
+}
+

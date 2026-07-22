@@ -15,3 +15,22 @@ export function getBlogPostBySlug(slug: string) {
     include: { category: true, tags: true, author: true },
   });
 }
+
+export function getAllBlogPosts() {
+  return prisma.blogPost.findMany({
+    orderBy: { updatedAt: "desc" },
+    include: { author: true, category: true },
+  });
+}
+
+export function getBlogPostById(id: string) {
+  return prisma.blogPost.findUnique({
+    where: { id },
+    include: { author: true, category: true, tags: true },
+  });
+}
+
+export function countBlogPosts() {
+  return prisma.blogPost.count();
+}
+

@@ -15,3 +15,18 @@ export function getFeaturedReferences(limit = 8) {
     take: limit,
   });
 }
+
+export function getAllReferences() {
+  return prisma.reference.findMany({
+    orderBy: [{ order: "asc" }, { createdAt: "desc" }],
+  });
+}
+
+export function getReferenceById(id: string) {
+  return prisma.reference.findUnique({ where: { id } });
+}
+
+export function countReferences() {
+  return prisma.reference.count();
+}
+

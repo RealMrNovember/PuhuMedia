@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { getAllHeroSlides } from "@/server/repositories/hero-slide.repository";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/admin/page-header";
+import { EmptyState } from "@/components/admin/empty-state";
 import { SlideRow } from "./slide-row";
 
 export const metadata: Metadata = {
@@ -12,41 +14,35 @@ export const metadata: Metadata = {
 
 export default async function HeroSliderPage() {
   const slides = await getAllHeroSlides();
+  const activeCount = slides.filter((s) => s.isActive).length;
 
   return (
-    <div className="container-brand max-w-3xl py-10">
-      <Link
-        href="/admin"
-        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-      >
-        <ArrowLeft className="size-4" />
-        Panele Dön
-      </Link>
+    <div className="mx-auto max-w-3xl">
+      <PageHeader
+        title="Hero Slider"
+        description="Ana sayfa slider'ını yönetin — görsel veya YouTube video slaytları ekleyin, sırasını değiştirin."
+        actions={
+          <Button asChild className="rounded-full">
+            <Link href="/admin/hero-slider/yeni">
+              <Plus className="size-4" />
+              Yeni Slayt
+            </Link>
+          </Button>
+        }
+      />
 
-      <div className="mt-4 flex items-center justify-between">
-        <div>
-          <h1 className="font-heading text-2xl font-medium text-foreground">
-            Hero Slider
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Ana sayfadaki slider&apos;ı yönetin — görsel veya YouTube video
-            slaytları ekleyin, sırasını değiştirin.
-          </p>
-        </div>
-        <Button asChild className="rounded-full">
-          <Link href="/admin/hero-slider/yeni">
-            <Plus className="size-4" />
-            Yeni Slayt
-          </Link>
-        </Button>
-      </div>
+      {slides.length > 0 && activeCount === 0 ? (
+        <p className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-800 dark:text-amber-200">
+          Aktif slayt yok. Ana sayfada varsayılan hero bölümü gösterilir.
+        </p>
+      ) : null}
 
       <div className="mt-8 space-y-3">
         {slides.length === 0 ? (
-          <p className="rounded-2xl border border-dashed border-border p-10 text-center text-sm text-muted-foreground">
-            Henüz slayt eklenmedi. Slayt eklemediğiniz sürece ana sayfada
-            varsayılan hero bölümü gösterilir.
-          </p>
+          <EmptyState
+            title="Henüz slayt yok"
+            description="Slayt eklemediğiniz sürece ana sayfada varsayılan hero bölümü gösterilir."
+          />
         ) : (
           slides.map((slide, index) => (
             <SlideRow
